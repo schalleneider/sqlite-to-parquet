@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Parquet;
 using Parquet.Rows;
 using Parquet.Schema;
-using System.Data.Common;
 
 namespace sqlite_to_parquet
 {
@@ -55,6 +54,9 @@ namespace sqlite_to_parquet
 
         private object ReadValue(string columnsType, SqliteDataReader reader, int index)
         {
+            if (reader.IsDBNull(index))
+                return null;
+
             switch (columnsType)
             {
                 case "int":
